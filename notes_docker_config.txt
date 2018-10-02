@@ -1,0 +1,5 @@
+sudo docker stop container_dockerized_quakes
+sudo docker rm container_dockerized_quakes
+sudo docker build -t image_dockerized_quakes .
+sudo docker run -d -e ELASTICSEARCH_SERVER=<IP_NUMBER_ELASTICSEARCH_SERVER> --name container_dockerized_quakes -p <PORT NUMBER ON HOST>:80 
+curl localhost:<PORT NUMBER ON HOST>/by_keyword?keyword=alaska
