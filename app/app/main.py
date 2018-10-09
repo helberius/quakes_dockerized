@@ -2,12 +2,13 @@ from flask import Flask
 from flask_restful import Resource, Api
 from flask import request
 from flask import jsonify
-from app.es_queries import ESQ
+from es_queries import ESQ
 from flask import make_response
 import time
 import datetime
 
 from flask_cors import CORS
+from configuration import *
 
 app =Flask(__name__)
 CORS(app)
@@ -130,8 +131,7 @@ api.add_resource(QuakesGet,'/<request_type_id>')
 
 
 if __name__ == '__main__':
-    # Only for debugging while developing
-    app.run(host='0.0.0.0', debug=True, port=80)
+    app.run(host=APP_HOST, debug = APP_DEBUG, port = APP_PORT)
 
 
 	

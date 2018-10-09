@@ -1,8 +1,15 @@
 from elasticsearch import Elasticsearch
 import os
+from configuration import *
 
 class ESQ():
-    es = Elasticsearch([{'host': os.environ['ELASTICSEARCH_SERVER'], 'port': 9200}])
+    ip_elasticsearch_server=None
+    if 'ELASTICSEARCH_SERVER' in os.environ:
+        ip_elasticsearch_server=os.environ['ELASTICSEARCH_SERVER']
+    else:
+        ip_elasticsearch_server =ELASTICSEARCH_SERVER
+
+    es = Elasticsearch([{'host': ip_elasticsearch_server, 'port': 9200}])
 
     def __init__(self, **kwargs):
         pass
@@ -47,6 +54,16 @@ class ESQ():
         print('upper_mag', upper_mag)
 
         if keyword is None:
+            if min_lng<-180:
+                min_lng=360+min_lng
+            if min_lng>180:
+                min_lng=-360+min_lng
+            if max_lng<-180:
+                max_lng=360+max_lng
+            if max_lng>180:
+                max_lng=-360+max_lng
+
+
             if min_lng>max_lng:
                 dict_query = {"sort": [{"properties.mag": "desc"}], "from": 0, "size": 1000,
                               "query": {
